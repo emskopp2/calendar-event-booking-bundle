@@ -28,5 +28,6 @@
     },
     "extra": {
         "contao-manager-plugin": "Markocupic\\CalendarEventBookingBundle\\ContaoManager\\Plugin"
-    }
+    },
+    "version": "5.0"
 }

@@ -140,7 +140,7 @@ class CalendarEventBookingUnsubscribeFromEventModuleController extends AbstractF
         return parent::__invoke($request, $model, $section, $classes);
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
         $calendarEventsModelAdapter = $this->framework->getAdapter(CalendarEventsModel::class);
 
