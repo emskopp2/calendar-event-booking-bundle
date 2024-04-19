@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -17,6 +17,7 @@ namespace Markocupic\CalendarEventBookingBundle\Controller\FrontendModule;
 use Contao\CalendarEventsModel;
 use Contao\Controller;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\Csrf\ContaoCsrfTokenManager;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Routing\ScopeMatcher;
@@ -26,10 +27,10 @@ use Contao\StringUtil;
 use Contao\Template;
 use Markocupic\CalendarEventBookingBundle\Helper\NotificationHelper;
 use Markocupic\CalendarEventBookingBundle\Model\CalendarEventsMemberModel;
-use NotificationCenter\Model\Notification;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Terminal42\NotificationCenterBundle\NotificationCenter;
 
 #[AsFrontendModule(CalendarEventBookingUnsubscribeFromEventModuleController::TYPE, category:'events', template: 'mod_calendar_event_booking_unsubscribe_from_event_module')]
 class CalendarEventBookingUnsubscribeFromEventModuleController extends AbstractFrontendModuleController
@@ -45,9 +46,11 @@ class CalendarEventBookingUnsubscribeFromEventModuleController extends AbstractF
 
     public function __construct(
         private readonly ContaoFramework $framework,
+        private readonly NotificationCenter $notificationCenter,
         private readonly NotificationHelper $notificationHelper,
         private readonly ScopeMatcher $scopeMatcher,
         private readonly TranslatorInterface $translator,
+        private readonly ContaoCsrfTokenManager $csrfTokenManager,
     ) {
     }
 
@@ -140,6 +143,9 @@ class CalendarEventBookingUnsubscribeFromEventModuleController extends AbstractF
         return parent::__invoke($request, $model, $section, $classes);
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
         $calendarEventsModelAdapter = $this->framework->getAdapter(CalendarEventsModel::class);
@@ -158,6 +164,7 @@ class CalendarEventBookingUnsubscribeFromEventModuleController extends AbstractF
                 $template->event = $this->objEvent;
                 $template->calendar = $this->objEvent->getRelated('pid');
                 $template->member = $this->objEventMember;
+                $template->requestToken = $this->csrfTokenManager->getDefaultTokenValue();
             }
         }
 
@@ -170,7 +177,6 @@ class CalendarEventBookingUnsubscribeFromEventModuleController extends AbstractF
     protected function notify(CalendarEventsMemberModel $objEventMember, CalendarEventsModel $objEvent, ModuleModel $model): void
     {
         $stringUtilAdapter = $this->framework->getAdapter(StringUtil::class);
-        $notificationAdapter = $this->framework->getAdapter(Notification::class);
 
         if ($objEvent->enableDeregistration) {
             // Multiple notifications possible
@@ -182,9 +188,7 @@ class CalendarEventBookingUnsubscribeFromEventModuleController extends AbstractF
 
                 // Send notification (multiple notifications possible)
                 foreach ($arrNotifications as $notificationId) {
-                    $objNotification = $notificationAdapter->findByPk($notificationId);
-
-                    $objNotification?->send($arrTokens, $this->objPage->language);
+                    $this->notificationCenter->sendNotification((int) $notificationId, $arrTokens, $this->objPage->language);
                 }
             }
         }

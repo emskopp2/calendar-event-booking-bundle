@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -60,18 +60,19 @@ class EventRegistration
 
     public function getEventFromCurrentUrl(): ?CalendarEventsModel
     {
-        $configAdapter = $this->framework->getAdapter(Config::class);
         $inputAdapter = $this->framework->getAdapter(Input::class);
         $calendarEventsModelAdapter = $this->framework->getAdapter(CalendarEventsModel::class);
 
         // Set the item from the auto_item parameter
-        if (!isset($_GET['events']) && $configAdapter->get('useAutoItem') && isset($_GET['auto_item'])) {
-            $inputAdapter->setGet('events', $inputAdapter->get('auto_item'));
+        if (empty($inputAdapter->get('events')) && isset($_GET['auto_item'])) {
+            $inputAdapter->setGet('events', Input::get('auto_item'));
         }
 
+        $eventIdOrAlias = $inputAdapter->get('events');
+
         // Return an empty string if "events" is not set
-        if ('' !== $inputAdapter->get('events')) {
-            if (null !== ($objEvent = $calendarEventsModelAdapter->findByIdOrAlias($inputAdapter->get('events')))) {
+        if (!empty($eventIdOrAlias)) {
+            if (null !== ($objEvent = $calendarEventsModelAdapter->findByIdOrAlias($eventIdOrAlias))) {
                 return $objEvent;
             }
         }

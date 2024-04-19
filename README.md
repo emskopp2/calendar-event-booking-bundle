@@ -88,6 +88,39 @@ Event: ##event_title##, ##event_street##, ##event_postal##, ##event_city##, ##ev
 
 Organisator/Email-Absender: ##organizer_name##, ##organizer_email, etc. (Feldnamen aus tl_user)
 
+```
+{if member_gender=='Männlich'}
+Sehr geehrter Herr ##member_firstname## ##member_lastname##
+{elseif member_gender=='Weiblich'}
+Sehr geehrte Frau ##member_firstname## ##member_lastname##
+{else}
+Hallo ##member_firstname## ##member_lastname##
+{endif}
+
+Hiermit bestätigen wir den Eingang Ihre Buchungsanfrage zur Veranstaltung "##event_title##" vom ##event_startDate##.
+
+Buchungsstatus: ##member_bookingState##.
+
+Bitte beachten Sie, dass Ihre Teilnahme erst nach erfolgter Prüfung definitiv wird. Sie erhalten dazu in den nächsten 1-2 Werktagen von uns die definitive Buchungsbestätigung.
+
+Ihre Angaben:
+Name/Vorname: ##member_firstname## ##member_lastname##
+Adresse: ##member_street##, ##member_postal##, ##member_city##
+Telefon: ##member_phone##
+E-Mail: ##member_email##
+Begleitpersonen: ##member_escorts##
+
+
+{if event_enableDeregistration=='ja'}
+Bitte benutzen Sie folgenden Link, um sich wieder von der Veranstaltung abzumelden:
+##member_unsubscribeHref##
+{endif}
+
+Freundliche Grüsse
+
+##sender_name##
+```
+
 #### Punkt 5: Event-Buchungsformular erstellen
 
 Beim ersten Aufruf der Seite nach der Installation der Erweiterung wird **automatisch** ein Beispielformular mit allen benötigten Feldern generiert.

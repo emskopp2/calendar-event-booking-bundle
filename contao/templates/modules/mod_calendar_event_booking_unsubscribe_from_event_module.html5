@@ -15,7 +15,7 @@
     <form action="{{env::request}}" id="<?= $this->formId ?>" method="post">
       <div class="formbody">
         <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formId ?>">
-        <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+        <input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
 
         <p class="unsubscribe_confirm">
           <?= $this->trans('MSC.unsubscribeConfirm', [$this->member->firstname, $this->member->lastname, $this->event->title]) ?>

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Markocupic\CalendarEventBookingBundle\Helper;
 
 use Codefog\HasteBundle\Formatter;
+use Codefog\HasteBundle\UrlParser;
 use Contao\CalendarEventsModel;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\ContaoFramework;
@@ -23,13 +24,17 @@ use Contao\StringUtil;
 use Contao\System;
 use Contao\UserModel;
 use Markocupic\CalendarEventBookingBundle\Model\CalendarEventsMemberModel;
-use NotificationCenter\Model\Notification;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Terminal42\NotificationCenterBundle\NotificationCenter;
 
 class NotificationHelper
 {
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly Formatter $formatter,
+        private readonly NotificationCenter $notificationCenter,
+        private readonly RequestStack $requestStack,
+        private readonly UrlParser $urlParser,
     ) {
     }
 
@@ -87,12 +92,6 @@ class NotificationHelper
                 }
                 $arrTokens['organizer_'.$k] = $this->formatter->dcaValue('tl_user', $k, $v);
             }
-
-            // deprecated since version 4.2, to be removed in 5.0 Use organizer_name instead of organizer_senderName */
-            $arrTokens['organizer_senderName'] = $arrTokens['organizer_name'];
-
-            // deprecated since version 4.2, to be removed in 5.0 Use organizer_email instead of organizer_senderEmail */
-            $arrTokens['organizer_senderEmail'] = $arrTokens['organizer_email'];
         }
 
         // Generate unsubscribe href
@@ -105,7 +104,7 @@ class NotificationHelper
                 $objPage = $pageModelAdapter->findByPk($objCalendar->eventUnsubscribePage);
 
                 if (null !== $objPage) {
-                    $arrTokens['event_unsubscribeHref'] = $objPage->getAbsoluteUrl().'?bookingToken='.$objEventMember->bookingToken;
+                    $arrTokens['event_unsubscribeHref'] = $this->urlParser->addQueryString('bookingToken='.$objEventMember->bookingToken, $objPage->getAbsoluteUrl());
                 }
             }
         }
@@ -125,11 +124,6 @@ class NotificationHelper
      */
     public function notify(CalendarEventsMemberModel $objEventMember, CalendarEventsModel $objEvent): void
     {
-        global $objPage;
-
-        /** @var Notification $notificationAdapter */
-        $notificationAdapter = $this->framework->getAdapter(Notification::class);
-
         /** @var StringUtil $stringUtilAdapter */
         $stringUtilAdapter = $this->framework->getAdapter(StringUtil::class);
 
@@ -143,9 +137,11 @@ class NotificationHelper
 
                 // Send notification (multiple notifications possible)
                 foreach ($arrNotifications as $notificationId) {
-                    $objNotification = $notificationAdapter->findByPk($notificationId);
+                    $request = $this->requestStack->getCurrentRequest();
+                    /** @var PageModel $page */
+                    $page = $request->attributes->get('page');
 
-                    $objNotification?->send($arrTokens, $objPage->language);
+                    $this->notificationCenter->sendNotification((int) $notificationId, $arrTokens, $page?->language);
                 }
             }
         }

@@ -17,7 +17,7 @@ use Markocupic\CalendarEventBookingBundle\DataContainer\CalendarEvents;
 use Contao\DataContainer;
 
 // Table config
-$GLOBALS['TL_DCA']['tl_calendar']['config']['ctable'][] = 'tl_calendar_events_member';
+$GLOBALS['TL_DCA']['tl_calendar_events']['config']['ctable'][] = 'tl_calendar_events_member';
 
 // Palettes
 PaletteManipulator::create()
