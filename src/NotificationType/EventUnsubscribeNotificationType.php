@@ -52,7 +52,7 @@ class EventUnsubscribeNotificationType implements NotificationTypeInterface
     {
         return [
             'email_token' => [
-                'sender_email',
+                'organizer_email',
                 'member_email',
                 'admin_email',
             ],
@@ -63,10 +63,10 @@ class EventUnsubscribeNotificationType implements NotificationTypeInterface
                 'member_*',
                 'member_dateOfBirth',
                 'member_salutation',
-                'member_unsubscribeHref',
-                'sender_*',
-                'sender_name',
-                'sender_email',
+                'event_unsubscribeHref',
+                'organizer_*',
+                'organizer_name',
+                'organizer_email',
                 'admin_email',
             ],
         ];

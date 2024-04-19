@@ -113,12 +113,12 @@ Begleitpersonen: ##member_escorts##
 
 {if event_enableDeregistration=='ja'}
 Bitte benutzen Sie folgenden Link, um sich wieder von der Veranstaltung abzumelden:
-##member_unsubscribeHref##
+##event_unsubscribeHref##
 {endif}
 
 Freundliche Grüsse
 
-##sender_name##
+##organizer_name##
 ```
 
 #### Punkt 5: Event-Buchungsformular erstellen

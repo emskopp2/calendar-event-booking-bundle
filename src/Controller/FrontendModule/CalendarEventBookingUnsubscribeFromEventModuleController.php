@@ -39,7 +39,6 @@ class CalendarEventBookingUnsubscribeFromEventModuleController extends AbstractF
 
     protected ?CalendarEventsMemberModel $objEventMember = null;
     protected ?CalendarEventsModel $objEvent = null;
-    protected ?PageModel $objPage = null;
     protected array $errorMsg = [];
     protected bool $blnHasUnsubscribed = false;
     protected bool $hasError = false;
@@ -61,8 +60,7 @@ class CalendarEventBookingUnsubscribeFromEventModuleController extends AbstractF
     {
         // Is frontend
         if ($page instanceof PageModel && $this->scopeMatcher->isFrontendRequest($request)) {
-            $this->objPage = $page;
-            $this->objPage->noSearch = 1;
+            $page->noSearch = 1;
 
             $calendarEventsMemberModelAdapter = $this->framework->getAdapter(CalendarEventsMemberModel::class);
             $controllerAdapter = $this->framework->getAdapter(Controller::class);
@@ -188,7 +186,7 @@ class CalendarEventBookingUnsubscribeFromEventModuleController extends AbstractF
 
                 // Send notification (multiple notifications possible)
                 foreach ($arrNotifications as $notificationId) {
-                    $this->notificationCenter->sendNotification((int) $notificationId, $arrTokens, $this->objPage->language);
+                    $this->notificationCenter->sendNotification((int) $notificationId, $arrTokens);
                 }
             }
         }
