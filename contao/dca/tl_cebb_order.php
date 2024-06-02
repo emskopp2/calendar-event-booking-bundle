@@ -108,7 +108,7 @@ $GLOBALS['TL_DCA']['tl_cebb_order'] = [
             'inputType' => 'text',
             'search'    => true,
             'sorting'   => true,
-            'sql'       => ['type' => 'integer', 'unsigned' => true, 'default' => null],
+            'sql'       => ['type' => 'integer', 'unsigned' => true, 'default' => 0],
         ],
         'paymentUuid'   => [
             'eval'      => ['mandatory' => false, 'maxlength' => 255, 'tl_class' => 'w50'],
