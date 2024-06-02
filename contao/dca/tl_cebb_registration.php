@@ -38,7 +38,7 @@ $GLOBALS['TL_DCA']['tl_cebb_registration'] = [
             'panelLayout' => 'filter;sort,search',
         ],
         'label'             => [
-            'fields'      => ['checkoutCompleted', 'bookingState', 'firstname', 'lastname', 'street', 'city', 'email'],
+            'fields'      => ['checkoutCompleted', 'dateAdded', 'bookingState', 'firstname', 'lastname', 'street', 'city', 'email'],
             'showColumns' => true,
         ],
         'global_operations' => [
