@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -29,22 +29,17 @@ final class ExportTable extends AbstractHook
     ) {
     }
 
-    /**
-     * @param mixed $varValue
-     *
-     * @return mixed
-     */
     public function __invoke(string $strFieldName, $varValue, string $strTableName, array $arrDataRecord, array $arrDca, Config $objConfig)
     {
         if (!self::isEnabled()) {
             return $varValue;
         }
 
-        if ('tl_calendar_events_member' === $strTableName) {
+        if ('tl_cebb_registration' === $strTableName) {
             $calendarEventsModelAdapter = $this->framework->getAdapter(CalendarEventsModel::class);
 
             if ('pid' === $strFieldName) {
-                $objModel = $calendarEventsModelAdapter->findByPk($varValue);
+                $objModel = $calendarEventsModelAdapter->findById($varValue);
 
                 if (null !== $objModel) {
                     $varValue = $objModel->title;

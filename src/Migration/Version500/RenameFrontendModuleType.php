@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -18,7 +18,7 @@ use Contao\CoreBundle\Migration\AbstractMigration;
 use Contao\CoreBundle\Migration\MigrationResult;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use Markocupic\CalendarEventBookingBundle\Controller\FrontendModule\EventBookingController;
+use Markocupic\CalendarEventBookingBundle\Controller\FrontendModule\EventBookingCheckoutController;
 use Markocupic\CalendarEventBookingBundle\Controller\FrontendModule\EventBookingListController;
 use Markocupic\CalendarEventBookingBundle\Controller\FrontendModule\EventUnsubscribeController;
 
@@ -126,7 +126,7 @@ class RenameFrontendModuleType extends AbstractMigration
 
         if ($count > 0) {
             $set = [
-                'type' => EventBookingController::TYPE,
+                'type' => EventBookingCheckoutController::TYPE,
             ];
             $this->connection->update('tl_module', $set, ['type' => 'eventbooking']);
             $arrMessage[] = 'Renamed frontend module type "eventbooking" to "'.$set['type'].'". Please rename your custom templates from "mod_eventbooking.html5" to "mod_event_booking_form.html5".';
@@ -134,7 +134,7 @@ class RenameFrontendModuleType extends AbstractMigration
 
         return new MigrationResult(
             true,
-            implode(' ', $arrMessage)
+            implode(' ', $arrMessage),
         );
     }
 }

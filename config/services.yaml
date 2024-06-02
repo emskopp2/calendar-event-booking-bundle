@@ -5,14 +5,23 @@ services:
         public: false
         bind:
             $projectDir: '%kernel.project_dir%'
+            $checkout: '%markocupic_calendar_event_booking.checkout%'
 
     Markocupic\CalendarEventBookingBundle\:
         resource: ../src/
         exclude: [
-            '../src/{Event,Model,DependencyInjection}',
-            '../src/EventBooking/Config/EventConfig.php'
+            '../src/{Event,Storage,Model,DependencyInjection}',
+            '../src/Checkout/Exception/CheckoutException.php',
+            '../src/Checkout/Exception/CheckoutException.php',
+            '../src/Checkout/Step/CheckoutManager.php',
+            '../src/Checkout/Step/DefaultCheckoutManagerFactory.php',
+            '../src/Checkout/CheckoutManagerFactoryCollection.php',
+            '../src/EventBooking/Config/EventConfig.php',
+            '../src/Registry/ExistingServiceException.php',
+            '../src/Registry/NonExistingServiceException.php',
+            '../src/Registry/PrioritizedServiceRegistry.php',
+            '../src/Registry/ServiceRegistry.php',
         ]
 
-    Markocupic\CalendarEventBookingBundle\DataContainer\DcaUtil:
-        public: true
-
+    Markocupic\CalendarEventBookingBundle\Checkout\CheckoutManagerFactoryCollection:
+        arguments: [ !tagged_iterator { tag: 'markocupic_calendar_event_booking.checkout_manager_factory', index_by: 'key' } ]

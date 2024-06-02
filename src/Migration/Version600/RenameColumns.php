@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -22,7 +22,9 @@ use Doctrine\DBAL\Exception;
 class RenameColumns extends AbstractMigration
 {
     private const STRING_TO_INT_CONVERSION = 'string_to_int_conversion';
+
     private const ALTERATION_TYPE_RENAME_COLUMN = 'alteration_type_rename_column';
+
     private const NULL_TO_0_CONVERSION = 'null_to_0_conversion';
 
     public function __construct(
@@ -152,7 +154,7 @@ class RenameColumns extends AbstractMigration
                             $set = [
                                 $arrAlteration['field'] => $arrAlteration['field_value_new'],
                             ];
-                            // Convert ''to '0'
+                            // Convert '' to '0'
                             $this->connection->update($arrAlteration['table'], $set, [$arrAlteration['field'] => $arrAlteration['field_value_old']]);
                             $resultMessages[] = sprintf(
                                 'Convert empty string to "0" in column %s.%s. ',
@@ -199,7 +201,7 @@ class RenameColumns extends AbstractMigration
                 'type' => self::ALTERATION_TYPE_RENAME_COLUMN,
                 'table' => 'tl_calendar_events',
                 'old' => 'enableNotificationCenter',
-                'new' => 'activateBookingNotification',
+                'new' => 'enableBookingNotification',
                 'sql' => 'char(1)',
             ],
             [
@@ -213,7 +215,7 @@ class RenameColumns extends AbstractMigration
                 'type' => self::ALTERATION_TYPE_RENAME_COLUMN,
                 'table' => 'tl_calendar_events',
                 'old' => 'enableDeregistration',
-                'new' => 'activateDeregistration',
+                'new' => 'enableUnsubscription',
                 'sql' => 'char(1)',
             ],
             [
@@ -226,36 +228,36 @@ class RenameColumns extends AbstractMigration
             [
                 'type' => self::ALTERATION_TYPE_RENAME_COLUMN,
                 'table' => 'tl_calendar_events',
-                'old' => 'includeEscortsWhenCalculatingRegCount',
-                'new' => 'addEscortsToTotal',
-                'sql' => 'char(1)',
-            ],
-            [
-                'type' => self::ALTERATION_TYPE_RENAME_COLUMN,
-                'table' => 'tl_calendar_events',
                 'old' => 'enableMultiBookingWithSameAddress',
                 'new' => 'allowDuplicateEmail',
                 'sql' => 'char(1)',
             ],
-            // tl_calendar_events_member
+            // tl_cebb_registration
             [
                 'type' => self::STRING_TO_INT_CONVERSION,
-                'table' => 'tl_calendar_events_member',
+                'table' => 'tl_cebb_registration',
                 'field_value_old' => '',
                 'field_value_new' => '0',
                 'field' => 'addedOn',
             ],
             [
                 'type' => self::NULL_TO_0_CONVERSION,
-                'table' => 'tl_calendar_events_member',
+                'table' => 'tl_cebb_registration',
                 'field' => 'escorts',
             ],
             [
                 'type' => self::ALTERATION_TYPE_RENAME_COLUMN,
-                'table' => 'tl_calendar_events_member',
+                'table' => 'tl_cebb_registration',
                 'old' => 'addedOn',
                 'new' => 'dateAdded',
                 'sql' => 'int(10)',
+            ],
+            [
+                'type' => self::ALTERATION_TYPE_RENAME_COLUMN,
+                'table' => 'tl_cebb_registration',
+                'old' => 'regToken',
+                'new' => 'uuid',
+                'sql' => 'varchar(255)',
             ],
         ];
     }

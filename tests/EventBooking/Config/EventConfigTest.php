@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -71,8 +71,8 @@ class EventConfigTest extends ContaoTestCase
             ->expects($this->exactly($input['expectsExactly']))
             ->method('fetchOne')
             ->withConsecutive(
-                ['SELECT COUNT(id) FROM tl_calendar_events_member WHERE pid = ? && bookingState = ?', [$event->id, BookingState::STATE_WAITING_LIST]],
-                ['SELECT SUM(escorts) FROM tl_calendar_events_member WHERE pid = ? && bookingState = ?', [$event->id, BookingState::STATE_WAITING_LIST]],
+                ['SELECT COUNT(id) FROM tl_cebb_registration WHERE pid = ? && bookingState = ?', [$event->id, BookingState::STATE_WAITING_LIST]],
+                ['SELECT SUM(escorts) FROM tl_cebb_registration WHERE pid = ? && bookingState = ?', [$event->id, BookingState::STATE_WAITING_LIST]],
             )
             ->willReturnOnConsecutiveCalls(...$input['consecutiveReturn'])
         ;
@@ -104,8 +104,8 @@ class EventConfigTest extends ContaoTestCase
             ->expects($this->exactly($input['expectsExactly']))
             ->method('fetchOne')
             ->withConsecutive(
-                ['SELECT COUNT(id) FROM tl_calendar_events_member WHERE pid = ? && bookingState = ?', [$event->id, BookingState::STATE_CONFIRMED]],
-                ['SELECT SUM(escorts) FROM tl_calendar_events_member WHERE pid = ? && bookingState = ?', [$event->id, BookingState::STATE_CONFIRMED]],
+                ['SELECT COUNT(id) FROM tl_cebb_registration WHERE pid = ? && bookingState = ?', [$event->id, BookingState::STATE_CONFIRMED]],
+                ['SELECT SUM(escorts) FROM tl_cebb_registration WHERE pid = ? && bookingState = ?', [$event->id, BookingState::STATE_CONFIRMED]],
             )
             ->willReturnOnConsecutiveCalls(...$input['consecutiveReturn'])
         ;
@@ -119,7 +119,7 @@ class EventConfigTest extends ContaoTestCase
         $this->assertSame($expected, $eventConfig->isFullyBooked());
     }
 
-    public function isWaitingListFullProvider(): \Generator
+    public static function isWaitingListFullProvider(): iterable
     {
         yield 'case #1' => [
             true, // expected
@@ -185,7 +185,7 @@ class EventConfigTest extends ContaoTestCase
         ];
     }
 
-    public function isFullyBookedProvider(): \Generator
+    public static function isFullyBookedProvider(): iterable
     {
         yield 'case #1' => [
             true, // expected

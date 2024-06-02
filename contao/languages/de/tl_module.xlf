@@ -1,23 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.1">
-    <file datatype="php" original="vendor/markocupic/calendar-event-booking-bundle/contao/languages/en/tl_module.php" source-language="en" target-language="de">
-        <body>
-            <trans-unit id="tl_module.form_legend">
-                <source>Booking form settings</source>
-                <target>Event-Buchungsformular Einstellungen</target>
-            </trans-unit>
-            <trans-unit id="tl_module.notification_legend">
-                <source>Notification settings</source>
-                <target>Benachrichtigungs-Einstellungen</target>
-            </trans-unit>
-            <trans-unit id="tl_module.cebb_memberListAllowedBookingStates.0">
-                <source>Allowed booking states</source>
-                <target>Zur Anzeige freigegeben Buchungen</target>
-            </trans-unit>
-            <trans-unit id="tl_module.cebb_memberListAllowedBookingStates.1">
-                <source>Please choose the allowed booking states.</source>
-                <target>Bitte wählen Sie aus, welche Buchungen angezeigt werden sollen.</target>
-            </trans-unit>
-        </body>
-    </file>
+  <file datatype="php" original="vendor/markocupic/calendar-event-booking-bundle/contao/languages/en/tl_module.php" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_module.form_legend">
+        <source>Booking form</source>
+        <target>Event-Buchungsformular</target>
+      </trans-unit>
+      <trans-unit id="tl_module.notification_legend">
+        <source>Notification</source>
+        <target>Benachrichtigung</target>
+      </trans-unit>
+      <trans-unit id="tl_module.checkout_legend">
+        <source>Checkout</source>
+        <target>Checkout</target>
+      </trans-unit>
+      <trans-unit id="tl_module.cebb_memberListAllowedBookingStates.0">
+        <source>Allowed booking states</source>
+        <target>Zur Anzeige freigegeben Buchungen</target>
+      </trans-unit>
+      <trans-unit id="tl_module.cebb_memberListAllowedBookingStates.1">
+        <source>Please choose the allowed booking states.</source>
+        <target>Bitte wählen Sie aus, welche Buchungen angezeigt werden sollen.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.cebb_jumpToOnCheckoutCompletion.0">
+        <source>Jump to page on checkout completion</source>
+        <target>Weiterleitungsseite nach Buchungsabschluss</target>
+      </trans-unit>
+      <trans-unit id="tl_module.cebb_jumpToOnCheckoutCompletion.1">
+        <source>Select a page to which the user will be redirected after completing the checkout.</source>
+        <target>Wählen Sie eine Seite aus, auf die der Benutzer nach Abschluss der Kaufabwicklung weitergeleitet wird.</target>
+      </trans-unit>
+      <trans-unit id="tl_module.cebb_checkoutType.0">
+        <source>Checkout system</source>
+        <target>Checkout-System</target>
+      </trans-unit>
+      <trans-unit id="tl_module.cebb_checkoutType.1">
+        <source>Please select a checkout system.</source>
+        <target>Wählen Sie das Checkout-System aus.</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

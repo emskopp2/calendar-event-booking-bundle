@@ -37,6 +37,10 @@
     background-color: darkorange;
 }
 
+.subscription-badge.waiting-for-payment {
+    background-color: #e75709;
+}
+
 .override_event > .tl_checkbox_single_container > label, .override_event h3 > label:not(.error) {
     color: darkorange;
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -15,41 +15,46 @@ declare(strict_types=1);
 namespace Markocupic\CalendarEventBookingBundle\EventBooking\Notification;
 
 use Codefog\HasteBundle\Formatter;
+use Codefog\HasteBundle\UrlParser;
+use Contao\CalendarEventsModel;
 use Contao\Config;
 use Contao\Controller;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFramework;
-use Contao\Environment;
 use Contao\PageModel;
-use Contao\System;
 use Contao\UserModel;
+use Markocupic\CalendarEventBookingBundle\Event\SetEventBookingNotificationTokensEvent;
 use Markocupic\CalendarEventBookingBundle\EventBooking\Config\EventConfig;
-use Markocupic\CalendarEventBookingBundle\Model\CalendarEventsMemberModel;
-use NotificationCenter\Model\Notification as NotificationModel;
+use Markocupic\CalendarEventBookingBundle\Model\CebbOrderModel;
+use Markocupic\CalendarEventBookingBundle\Model\CebbRegistrationModel;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Terminal42\NotificationCenterBundle\NotificationCenter;
 
 class Notification
 {
-    private Adapter $config;
-    private Adapter $controller;
-    private Adapter $environment;
-    private Adapter $notification;
-    private Adapter $pageModel;
-    private Adapter $system;
-    private Adapter $userModel;
+    private Adapter $configAdapter;
+
+    private Adapter $controllerAdapter;
+
+    private Adapter $pageModelAdapter;
+
+    private Adapter $userModelAdapter;
 
     private array $arrTokens = [];
 
     public function __construct(
         private readonly ContaoFramework $framework,
+        private readonly EventDispatcherInterface $eventDispatcher,
         private readonly Formatter $formatter,
+        private readonly NotificationCenter $notificationCenter,
+        private readonly RequestStack $requestStack,
+        private readonly UrlParser $urlParser,
     ) {
-        $this->config = $this->framework->getAdapter(Config::class);
-        $this->controller = $this->framework->getAdapter(Controller::class);
-        $this->environment = $this->framework->getAdapter(Environment::class);
-        $this->notification = $this->framework->getAdapter(NotificationModel::class);
-        $this->pageModel = $this->framework->getAdapter(PageModel::class);
-        $this->system = $this->framework->getAdapter(System::class);
-        $this->userModel = $this->framework->getAdapter(UserModel::class);
+        $this->configAdapter = $this->framework->getAdapter(Config::class);
+        $this->controllerAdapter = $this->framework->getAdapter(Controller::class);
+        $this->pageModelAdapter = $this->framework->getAdapter(PageModel::class);
+        $this->userModelAdapter = $this->framework->getAdapter(UserModel::class);
     }
 
     public function getTokens(): array
@@ -60,41 +65,57 @@ class Notification
     /**
      * @throws \Exception
      */
-    public function setTokens(EventConfig $eventConfig, CalendarEventsMemberModel $objEventMember, int|null $senderId): void
+    public function setTokens(EventConfig $eventConfig, CebbRegistrationModel $registration, int|null $senderId): void
     {
         $arrTokens = [];
 
-        $strEventMemberTable = CalendarEventsMemberModel::getTable();
+        $strRegistrationTable = CebbRegistrationModel::getTable();
+        $strOrderTable = CebbOrderModel::getTable();
+        $strEventsTable = CalendarEventsModel::getTable();
 
         // Get admin email
-        $arrTokens['admin_email'] = $GLOBALS['TL_ADMIN_EMAIL'] ?? $this->config->get('adminEmail');
+        $arrTokens['admin_email'] = $GLOBALS['TL_ADMIN_EMAIL'] ?? $this->configAdapter->get('adminEmail');
 
-        // Prepare tokens for event member and use "member_*" as prefix
-        $this->controller->loadDataContainer($strEventMemberTable);
+        // Prepare tokens for the order use "order_*" as prefix
+        $this->controllerAdapter->loadDataContainer($strOrderTable);
 
-        // Load language file
-        $this->controller->loadLanguageFile($strEventMemberTable);
+        $order = CebbOrderModel::findByUuid($registration->orderUuid);
 
-        $row = $objEventMember->row();
+        if (null !== $order) {
+            $row = $order->row();
+
+            foreach ($row as $k => $v) {
+                if (isset($GLOBALS['TL_DCA'][$strOrderTable]['fields'][$k])) {
+                    $arrTokens['order_'.$k] = $this->formatter->dcaValue($strOrderTable, $k, $v);
+                } else {
+                    $arrTokens['order_'.$k] = html_entity_decode((string) $v);
+                }
+            }
+        }
+
+        // Prepare tokens for the order use "member_*" as prefix
+        $this->controllerAdapter->loadDataContainer($strRegistrationTable);
+
+        $row = $registration->row();
 
         foreach ($row as $k => $v) {
-            if (isset($GLOBALS['TL_DCA'][$strEventMemberTable]['fields'][$k])) {
-                $arrTokens['member_'.$k] = $this->formatter->dcaValue('tl_calendar_events_member', $k, $v);
+            if (isset($GLOBALS['TL_DCA'][$strRegistrationTable]['fields'][$k])) {
+                $arrTokens['member_'.$k] = $this->formatter->dcaValue($strRegistrationTable, $k, $v);
             } else {
                 $arrTokens['member_'.$k] = html_entity_decode((string) $v);
             }
         }
 
-        $arrTokens['member_salutation'] = html_entity_decode((string) ($GLOBALS['TL_LANG'][$strEventMemberTable]['salutation_'.$objEventMember->gender] ?? ''));
+        $arrTokens['member_salutation'] = html_entity_decode((string) ($GLOBALS['TL_LANG'][$strRegistrationTable]['salutation_'.$registration->gender] ?? ''));
 
         // Prepare tokens for event and use "event_*" as prefix
-        $this->controller->loadDataContainer('tl_calendar_events');
+        $this->controllerAdapter->loadDataContainer($strEventsTable);
 
         $arrFields = array_keys($eventConfig->getModel()->row());
 
         foreach ($arrFields as $fieldName) {
-            if (isset($GLOBALS['TL_DCA']['tl_calendar_events']['fields'][$fieldName])) {
-                $arrTokens['event_'.$fieldName] = $this->formatter->dcaValue('tl_calendar_events', $fieldName, $eventConfig->get($fieldName));
+            if (isset($GLOBALS['TL_DCA'][$strEventsTable]['fields'][$fieldName])) {
+                $arrTokens['event_'.$fieldName] = $this->formatter->dcaValue($strEventsTable, $fieldName, $eventConfig->get($fieldName));
             } else {
                 $arrTokens['event_'.$fieldName] = html_entity_decode((string) $eventConfig->get($fieldName));
             }
@@ -102,12 +123,12 @@ class Notification
 
         if ($senderId) {
             // Prepare tokens for the sender and use "sender_*" as prefix
-            $objSender = $this->userModel->findByPk($senderId);
+            $sender = $this->userModelAdapter->findById($senderId);
 
-            if (null !== $objSender) {
-                $this->controller->loadDataContainer('tl_user');
+            if (null !== $sender) {
+                $this->controllerAdapter->loadDataContainer('tl_user');
 
-                $row = $objSender->row();
+                $row = $sender->row();
 
                 foreach ($row as $k => $v) {
                     if ('password' === $k || 'session' === $k) {
@@ -123,34 +144,32 @@ class Notification
             }
         }
 
-        // Generate unsubscribe href
-        $arrTokens['member_unsubscribeHref'] = '';
+        // Generate unsubscribe url
+        $arrTokens['member_cancelRegistrationUrl'] = '';
 
-        /* Backward compatibility */
-        $arrTokens['event_unsubscribeHref'] = '';
+        // An order can have multiple registrations This makes it possible to create a
+        // function that can be used to cancel all registrations of an order.
+        $arrTokens['member_cancelOrderUrl'] = '';
 
-        if ($eventConfig->get('activateDeregistration')) {
+        if ($eventConfig->get('enableUnsubscription')) {
             $objCalendar = $eventConfig->getModel()->getRelated('pid');
 
             if (null !== $objCalendar) {
-                $objPage = $this->pageModel->findByPk($objCalendar->eventUnsubscribePage);
+                $objPage = $this->pageModelAdapter->findById($objCalendar->eventUnsubscribePage);
 
                 if (null !== $objPage) {
-                    $url = $objPage->getFrontendUrl().'?bookingToken='.$objEventMember->bookingToken;
-                    $arrTokens['member_unsubscribeHref'] = $this->environment->get('url').'/'.$url;
-                    $arrTokens['event_unsubscribeHref'] = $this->environment->get('url').'/'.$url;
+                    $url = $this->urlParser->addQueryString('regUuid='.$registration->uuid, $objPage->getAbsoluteUrl());
+                    $arrTokens['member_cancelRegistrationUrl'] = $url;
+                    $url = $this->urlParser->addQueryString('orderUuid='.$registration->orderUuid, $objPage->getAbsoluteUrl());
+                    $arrTokens['member_cancelOrderUrl'] = $url;
                 }
             }
         }
 
-        // Trigger calEvtBookingPostBooking hook
-        if (isset($GLOBALS['TL_HOOKS']['calEvtBookingGetNotificationTokens']) && \is_array($GLOBALS['TL_HOOKS']['calEvtBookingGetNotificationTokens'])) {
-            foreach ($GLOBALS['TL_HOOKS']['calEvtBookingGetNotificationTokens'] as $callback) {
-                $arrTokens = $this->system->importStatic($callback[0])->{$callback[1]}($objEventMember, $eventConfig, $arrTokens);
-            }
-        }
+        $event = new SetEventBookingNotificationTokensEvent($arrTokens, $eventConfig, $registration, $this->requestStack->getCurrentRequest());
+        $this->eventDispatcher->dispatch($event);
 
-        $this->arrTokens = $arrTokens;
+        $this->arrTokens = $event->getTokens();
     }
 
     /**
@@ -158,14 +177,10 @@ class Notification
      */
     public function notify(array $arrNotifications): void
     {
-        global $objPage;
-
         if (!empty($arrNotifications)) {
             // Send notification (multiple notifications possible)
             foreach ($arrNotifications as $notificationId) {
-                $objNotification = $this->notification->findByPk($notificationId);
-
-                $objNotification?->send($this->getTokens(), $objPage->language);
+                $this->notificationCenter->sendNotification($notificationId, $this->getTokens());
             }
         }
     }

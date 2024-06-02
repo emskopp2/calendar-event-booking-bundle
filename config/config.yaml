@@ -1,0 +1,2 @@
+imports:
+    - { resource: checkout/checkout.yaml }

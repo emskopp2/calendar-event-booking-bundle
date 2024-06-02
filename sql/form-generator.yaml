@@ -88,12 +88,28 @@ form:
             tabindex: 9
             class: form-cal-event-booking-%s
             rgxp: phone
+        ## add a new form field "quantity"
+        -   name: quantity
+            type: select
+            label: Anzahl Tickets
+            mandatory: 1
+            tabindex: 10
+            options:
+                -   value: 1
+                    default: 1
+                -   value: 2
+                -   value: 3
+                -   value: 4
+                -   value: 5
+            class: form-cal-event-booking-%s
+            rgxp: digit
+            value: 0
         ## add a new form field "escorts"
         -   name: escorts
             type: text
             label: Anzahl Begleitpersonen
             mandatory: 1
-            tabindex: 10
+            tabindex: 11
             class: form-cal-event-booking-%s
             rgxp: digit
             value: 0
@@ -101,7 +117,7 @@ form:
         -   name: notes
             type: textarea
             label: Anmerkungen
-            tabindex: 11
+            tabindex: 12
             class: form-cal-event-booking-%s
             size:
                 - 8
@@ -110,7 +126,7 @@ form:
         -   name: cebbBookingDefaultSubmit
             type: submit
             slabel: Buchungsanfrage absenden
-            tabindex: 12
+            tabindex: 13
             class: form-cal-event-booking-%s
         ## close the fieldset
         -   name: cebbBookingDefaultFieldsetEnd

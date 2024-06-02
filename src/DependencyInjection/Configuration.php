@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -28,8 +28,46 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->getRootNode()
             ->children()
+                ->scalarNode('checkout_temp_locking_time')
+                    ->info('Here you can set how long (in seconds) a booking is blocked if the booking process has not been completed correctly.')
+                    ->defaultValue(60 * 60)->cannotBeEmpty()
+                ->end()
+                ->scalarNode('checkout_step_parameter_name')
+                    ->defaultValue('action')
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('checkout_manager_factory')
+                    ->cannotBeEmpty()
+                ->end()
+                ->arrayNode('checkout')
+                    ->useAttributeAsKey('name')
+                    ->arrayPrototype()
+                        ->children()
+                            ->arrayNode('steps')
+                                ->useAttributeAsKey('name')
+                                ->arrayPrototype()
+                                    ->children()
+                                        ->scalarNode('step')
+                                            ->info('The FQDN to the step service.')
+                                            ->example('Markocupic\CalendarEventBookingBundle\Checkout\Step\SubscriptionStep')
+                                        ->end()
+                                        ->integerNode('priority')
+                                            ->info('Set an integer for the step priority. The step with the higher priority is called first.')
+                                            ->example('100')
+                                            ->defaultValue(0)
+                                        ->end()
+                                        ->scalarNode('template')
+                                            ->info('Set the path for the view.')
+                                            ->example('@App/Checkout/Step/customer.html.twig')
+                                        ->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
                 ->append($this->addMemberListNode())
-             ->end()
+            ->end()
         ;
 
         return $treeBuilder;
@@ -52,10 +90,10 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('convert_to')
                     ->defaultValue('ISO-8859-1')
                     ->cannotBeEmpty()
-                    ->info('Convert data uppon csv export to a specific charset e.g. ISO-8859-1.')
+                    ->info('Convert data upon csv export to a specific charset e.g. ISO-8859-1.')
                     ->example('ISO-8859-1')
                 ->end()
             ->end()
-            ;
+        ;
     }
 }

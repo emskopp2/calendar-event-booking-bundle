@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -80,12 +80,29 @@ final class FormatValues extends AbstractHook
 
             // Fit select menu to max escorts per member
             if ('escorts' === $objWidget->name) {
-                $maxEscorts = $eventConfig->get('maxEscortsPerMember');
+                $max = $eventConfig->get('maxEscortsPerMember');
 
-                if ($maxEscorts > 0) {
+                if ($max > 0) {
                     $opt = [];
 
-                    for ($i = 0; $i <= $maxEscorts; ++$i) {
+                    for ($i = 0; $i <= $max; ++$i) {
+                        $opt[] = [
+                            'value' => $i,
+                            'label' => $i,
+                        ];
+                    }
+                    $objWidget->options = serialize($opt);
+                }
+            }
+
+            if ('quantity' === $objWidget->name) {
+                $max = $eventConfig->get('maxQuantityPerRegistration');
+
+                if ($max > 0) {
+                    $opt = [];
+
+                    // Quantity should at least be 1
+                    for ($i = 1; $i <= $max; ++$i) {
                         $opt[] = [
                             'value' => $i,
                             'label' => $i,

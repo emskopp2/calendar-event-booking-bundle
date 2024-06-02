@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -14,19 +14,20 @@ declare(strict_types=1);
 
 namespace Markocupic\CalendarEventBookingBundle\DataContainer;
 
-use Contao\Controller;
-use Contao\CoreBundle\Framework\Adapter;
-use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 
 class Module
 {
     public const TABLE = 'tl_module';
 
-    private Adapter $controller;
-
     public function __construct(
-        private readonly ContaoFramework $framework,
+        private readonly array $checkout,
     ) {
-        $this->controller = $this->framework->getAdapter(Controller::class);
+    }
+
+    #[AsCallback(table: self::TABLE, target: 'fields.cebb_checkoutType.options')]
+    public function getCheckoutTypes(): array
+    {
+        return array_keys($this->checkout);
     }
 }

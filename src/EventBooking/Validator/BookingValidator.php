@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -14,12 +14,25 @@ declare(strict_types=1);
 
 namespace Markocupic\CalendarEventBookingBundle\EventBooking\Validator;
 
+use Contao\CoreBundle\Framework\Adapter;
+use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\StringUtil;
 use Doctrine\DBAL\Exception;
 use Markocupic\CalendarEventBookingBundle\EventBooking\Config\EventConfig;
+use Markocupic\CalendarEventBookingBundle\Exception\CalendarNotFoundException;
+use Markocupic\CalendarEventBookingBundle\Model\CebbCartModel;
 
 class BookingValidator
 {
     public const FLASH_KEY = '_event_registration';
+
+    private Adapter $stringUtilAdapter;
+
+    public function __construct(
+        private readonly ContaoFramework $framework,
+    ) {
+        $this->stringUtilAdapter = $this->framework->getAdapter(StringUtil::class);
+    }
 
     /**
      * @throws Exception
@@ -30,12 +43,22 @@ class BookingValidator
             return false;
         }
 
+        $calendar = $eventConfig->getModel()->getRelated('pid');
+
+        if (null === $calendar) {
+            throw new CalendarNotFoundException('Can not find a matching calendar for event with ID '.$eventConfig->get('id').'.');
+        }
+
+        $seatsAvailable = $eventConfig->getBookingMax();
+
         // Value is not set, unlimited number of subscriptions
-        if (!($seatsAvailable = $eventConfig->getBookingMax())) {
+        if (!$seatsAvailable) {
             return true;
         }
 
-        $total = $eventConfig->getConfirmedBookingsCount();
+        $stringUtilAdapter = $this->framework->getAdapter(StringUtil::class);
+        $bookingStates = $stringUtilAdapter->deserialize($calendar->calculateTotalFrom, true);
+        $total = $eventConfig->countByEventAndBookingState($bookingStates, false);
 
         return !($total + $numSeats > $seatsAvailable);
     }
@@ -54,11 +77,13 @@ class BookingValidator
         }
 
         // Value is not set, unlimited number of subscriptions
-        if (!($seatsAvailable = $eventConfig->getWaitingListLimit())) {
+        $seatsAvailable = $eventConfig->getWaitingListLimit();
+
+        if (!$seatsAvailable) {
             return true;
         }
 
-        $total = $eventConfig->getWaitingListCount();
+        $total = $eventConfig->getWaitingListCount(false);
 
         return !($total + $numSeats > $seatsAvailable);
     }
@@ -81,8 +106,33 @@ class BookingValidator
         return true;
     }
 
+    public function validateMaxCartItems(EventConfig $eventConfig, CebbCartModel|null $cart = null): bool
+    {
+        $intAllowed = $eventConfig->get('maxItemsPerCart');
+
+        if (null === $cart) {
+            return true;
+        }
+
+        // 0 means infinite items allowed
+        if (0 === $intAllowed) {
+            return true;
+        }
+
+        $arrRegistrations = $this->stringUtilAdapter->deserialize($cart->registrations, true);
+        $intAvailable = \count($arrRegistrations);
+
+        if ($intAvailable < $intAllowed) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Validate if:
+     * - Cart has reached max allowed items
+     *   and
      * - Event is bookable
      *   and
      * - Event is not fully booked
@@ -91,8 +141,12 @@ class BookingValidator
      *
      * @throws Exception
      */
-    public function validateCanRegister(EventConfig $eventConfig): bool
+    public function validateCanRegister(EventConfig $eventConfig, CebbCartModel|null $cart = null, int $numSeats = 1): bool
     {
+        if (!$this->validateMaxCartItems($eventConfig, $cart)) {
+            return false;
+        }
+
         if (!$eventConfig->isBookable()) {
             return false;
         }
@@ -105,11 +159,11 @@ class BookingValidator
             return false;
         }
 
-        if ($this->validateBookingMax($eventConfig, 1)) {
+        if ($this->validateBookingMax($eventConfig, $numSeats)) {
             return true;
         }
 
-        if ($this->validateBookingMaxWaitingList($eventConfig, 1)) {
+        if ($this->validateBookingMaxWaitingList($eventConfig, $numSeats)) {
             return true;
         }
 

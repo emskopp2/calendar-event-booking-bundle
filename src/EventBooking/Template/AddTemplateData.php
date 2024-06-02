@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -18,11 +18,10 @@ use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\FrontendUser;
 use Contao\MemberModel;
-use Contao\Template;
 use Doctrine\DBAL\Exception;
 use Markocupic\CalendarEventBookingBundle\EventBooking\Config\EventConfig;
 use Markocupic\CalendarEventBookingBundle\EventBooking\Validator\BookingValidator;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 final class AddTemplateData
 {
@@ -37,65 +36,66 @@ final class AddTemplateData
     }
 
     /**
-     * Augment template with more event properties.
+     * Used to augment template with more event properties.
      *
      * @throws Exception
      */
-    public function addTemplateData(EventConfig $eventConfig, Template $template): void
+    public function getTemplateData(EventConfig $eventConfig): array
     {
-        $template->canRegister = $this->bookingValidator->validateCanRegister($eventConfig);
+        $data = [];
 
-        $template->isFullyBooked = $eventConfig->isFullyBooked();
+        $data['canRegister'] = $this->bookingValidator->validateCanRegister($eventConfig);
 
-        $template->numberFreeSeats = $eventConfig->getNumberOfFreeSeats();
+        $data['bookingMin'] = $eventConfig->getBookingMin();
 
-        $template->numberFreeSeatsWaitingList = $eventConfig->get('activateWaitingList') ? $eventConfig->getNumberOfFreeSeats(true) : 0;
+        $data['bookingMax'] = $eventConfig->getBookingMax();
 
-        $template->confirmedBookingsCount = $eventConfig->getConfirmedBookingsCount();
+        $data['bookingStartDate'] = $eventConfig->getBookingStartDate('date');
 
-        $template->bookingMin = $eventConfig->getBookingMin();
+        $data['bookingStartDatim'] = $eventConfig->getBookingStartDate('datim');
 
-        $template->bookingMax = $eventConfig->getBookingMax();
+        $data['bookingStartTimestamp'] = $eventConfig->getBookingStartDate('timestamp');
 
-        $template->bookingStartDate = $eventConfig->getBookingStartDate('date');
+        $data['getBookingEndDate'] = $eventConfig->getBookingEndDate('date');
 
-        $template->bookingStartDatim = $eventConfig->getBookingStartDate('datim');
+        $data['getBookingEndDatim'] = $eventConfig->getBookingEndDate('datim');
 
-        $template->bookingStartTimestamp = $eventConfig->getBookingStartDate('timestamp');
+        $data['getBookingEndTimestamp'] = $eventConfig->getBookingEndDate('timestamp');
 
-        $template->getBookingEndDate = $eventConfig->getBookingEndDate('date');
+        $data['hasLoggedInUser'] = $this->hasLoggedInFrontendUser();
 
-        $template->getBookingEndDatim = $eventConfig->getBookingEndDate('datim');
+        $data['getLoggedInUser'] = $this->getLoggedInFrontendUser() ? $this->getLoggedInFrontendUser()->row() : [];
 
-        $template->getBookingEndTimestamp = $eventConfig->getBookingEndDate('timestamp');
+        $data['event'] = $eventConfig->getModel()->row();
 
-        $template->hasLoggedInUser = $this->hasLoggedInFrontendUser();
+        $data['eventConfig'] = $eventConfig;
 
-        $template->getLoggedInUser = $this->getLoggedInFrontendUser() ? $this->getLoggedInFrontendUser()->row() : [];
+        $data['isFullyBooked'] = static fn (bool $ignoreRegWithUncompletedCheckout = true): bool => $eventConfig->isFullyBooked($ignoreRegWithUncompletedCheckout);
 
-        $template->event = $eventConfig->getModel()->row();
+        $data['numberFreeSeats'] = static fn (bool $ignoreRegWithUncompletedCheckout = true): int => $eventConfig->getNumberOfFreeSeats();
 
-        $template->eventConfig = $eventConfig;
+        $data['registrations'] = static fn (array $filter = [], bool $ignoreRegWithUncompletedCheckout = true): array => $eventConfig->getRegistrationsAsArray($filter, $ignoreRegWithUncompletedCheckout);
 
-        // In your twig template:
-        // {{ registrations.invoke() }} {# all registrations #}
-        // {{ registrations.invoke(['cebb_booking_state_on_waiting_list', 'cebb_booking_state_confirmed']) }} {# filtered #}
-        $template->registrations = static fn (array $filter = []): array => $eventConfig->getRegistrationsAsArray($filter);
+        $data['numberFreeSeatsWaitingList'] = static fn (bool $ignoreRegWithUncompletedCheckout = true): int => $eventConfig->getNumberOfFreeSeatsWaitingList($ignoreRegWithUncompletedCheckout);
+
+        $data['confirmedBookingsCount'] = static fn (bool $ignoreRegWithUncompletedCheckout = true): int => $eventConfig->getRegistrationTotalCount($ignoreRegWithUncompletedCheckout);
+
+        return $data;
     }
 
-    private function hasLoggedInFrontendUser(): bool
+    protected function hasLoggedInFrontendUser(): bool
     {
         $user = $this->security->getUser();
 
         return $user instanceof FrontendUser;
     }
 
-    private function getLoggedInFrontendUser(): MemberModel|null
+    protected function getLoggedInFrontendUser(): MemberModel|null
     {
         $user = $this->security->getUser();
 
         if ($user instanceof FrontendUser) {
-            return $this->memberModelAdapter->findByPk($user->id);
+            return $this->memberModelAdapter->findById($user->id);
         }
 
         return null;

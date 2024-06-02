@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of Calendar Event Booking Bundle.
  *
- * (c) Marko Cupic 2023 <m.cupic@gmx.ch>
+ * (c) Marko Cupic 2024 <m.cupic@gmx.ch>
  * @license MIT
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
@@ -28,13 +28,13 @@ final class SendNotification extends AbstractHook
 {
     public const HOOK = AbstractHook::HOOK_UNSUBSCRIBE_FROM_EVENT;
 
-    private Adapter $stringUtil;
+    private Adapter $stringUtilAdapter;
 
     public function __construct(
         private readonly ContaoFramework $framework,
         private readonly Notification $notification,
     ) {
-        $this->stringUtil = $this->framework->getAdapter(StringUtil::class);
+        $this->stringUtilAdapter = $this->framework->getAdapter(StringUtil::class);
     }
 
     /**
@@ -47,7 +47,8 @@ final class SendNotification extends AbstractHook
         }
 
         // Multiple notifications possible
-        $arrNotificationIds = $this->stringUtil->deserialize($eventConfig->get('eventUnsubscribeNotification'), true);
+        $arrNotificationIds = $this->stringUtilAdapter->deserialize($eventConfig->get('eventUnsubscribeNotification'), true);
+        $arrNotificationIds = array_map('intval', $arrNotificationIds);
 
         if (!empty($arrNotificationIds)) {
             // Get notification tokens
