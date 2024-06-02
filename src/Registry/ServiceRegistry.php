@@ -26,7 +26,7 @@ class ServiceRegistry implements ServiceRegistryInterface
 
     public function all(): array
     {
-       return $this->services;
+        return $this->services;
     }
 
     public function register(string $identifier, object $service): void

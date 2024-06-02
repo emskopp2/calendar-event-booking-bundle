@@ -43,7 +43,7 @@ class CartUtil
 
     public function countRegistrations(Request $request): int
     {
-        return count($this->getRegistrations($request));
+        return \count($this->getRegistrations($request));
     }
 
     public function getRegistrations(Request $request): array

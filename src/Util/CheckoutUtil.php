@@ -19,7 +19,6 @@ use Contao\CalendarEventsModel;
 use Contao\ModuleModel;
 use Contao\PageModel;
 use Markocupic\CalendarEventBookingBundle\Checkout\CheckoutManagerFactoryCollection;
-use Markocupic\CalendarEventBookingBundle\Checkout\CheckoutManagerFactoryInterface;
 use Markocupic\CalendarEventBookingBundle\Checkout\CheckoutManagerInterface;
 use Markocupic\CalendarEventBookingBundle\Checkout\Step\ValidationCheckoutStepInterface;
 use Markocupic\CalendarEventBookingBundle\EventBooking\Config\EventConfig;
@@ -43,6 +42,7 @@ class CheckoutUtil
         $moduleModel = $this->getModuleModel($request);
         $checkoutManagerFactories = iterator_to_array($this->checkoutManagerFactoryCollection->getCheckoutManagerFactories());
         $checkoutManagerFactory = $checkoutManagerFactories[$moduleModel->cebb_checkoutType];
+
         return $checkoutManagerFactory->createCheckoutManager($eventConfig, $request);
     }
 

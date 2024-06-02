@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-6 bg-white">
-        <h3>{{ 'MSC.finalize_registration'|trans([],'contao_default')|capitalize }}</h3>
+        <h3>{{ 'MSC.finalize_registration'|trans([],'contao_default') }}</h3>
 
         {% if messages|default %}
             <div class="cebb_checkout__message-box">
@@ -30,6 +30,9 @@
                             </div>
                             <div class="col-12">
                                 <span class="cebb_checkout__registration-listing-email">{{ registration.email|default }}</span>
+                            </div>
+                            <div class="col-12">
+                                <span class="cebb_checkout__registration-listing-quantity">{{ registration.quantity|default }} {{ 'MSC.tickets'|trans([], 'contao_default') }}</span>
                             </div>
                         </div>
                     </div>

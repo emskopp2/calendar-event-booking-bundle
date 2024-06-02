@@ -46,12 +46,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class FinalisationStep implements CheckoutStepInterface, RedirectCheckoutStepInterface
 {
     private const STEP_IDENTIFIER = 'finalisation';
+
     private readonly Adapter $cebbRegistrationModelAdapter;
+
     private readonly Adapter $messageAdapter;
+
     private readonly Adapter $orderAdapter;
+
     private readonly Adapter $pageModelAdapter;
+
     private readonly Adapter $stringUtilAdapter;
+
     private string $templatePath = '';
+
     private Form|null $form = null;
 
     public function __construct(

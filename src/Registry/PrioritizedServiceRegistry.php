@@ -147,6 +147,7 @@ final class PrioritizedServiceRegistry implements PrioritizedServiceRegistryInte
     public function getIndex($identifier): int
     {
         $keys = $this->priorityMap->getKeys();
+
         return array_search($identifier, $keys, true);
     }
 

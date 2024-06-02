@@ -16,20 +16,21 @@ use Markocupic\CalendarEventBookingBundle\EventBooking\Booking\BookingState;
 use Markocupic\CalendarEventBookingBundle\Checkout\Step\SubscriptionStep;
 
 // Misc
-$GLOBALS['TL_LANG']['MSC']['costs'] = 'costs';
-$GLOBALS['TL_LANG']['MSC']['bookings'] = 'bookings';
-$GLOBALS['TL_LANG']['MSC']['register'] = 'register';
+$GLOBALS['TL_LANG']['MSC']['costs'] = 'Costs';
+$GLOBALS['TL_LANG']['MSC']['tickets'] = 'ticket(s)';
+$GLOBALS['TL_LANG']['MSC']['bookings'] = 'Bookings';
+$GLOBALS['TL_LANG']['MSC']['register'] = 'Register';
 $GLOBALS['TL_LANG']['MSC']['your_registrations'] = 'Your registrations';
 $GLOBALS['TL_LANG']['MSC']['finalize_registration'] = 'Finalize registration';
 
 // Booking state references
-$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_UNDEFINED] = 'undefined';
-$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_NOT_CONFIRMED] = 'not confirmed';
-$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_CONFIRMED] = 'confirmed';
-$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_WAITING_FOR_PAYMENT] = 'waiting for payment';
-$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_UNSUBSCRIBED] = 'unsubscribed';
-$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_REJECTED] = 'rejected';
-$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_WAITING_LIST] = 'waiting list';
+$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_UNDEFINED] = 'Undefined';
+$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_NOT_CONFIRMED] = 'Not confirmed';
+$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_CONFIRMED] = 'Confirmed';
+$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_WAITING_FOR_PAYMENT] = 'Waiting for payment';
+$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_UNSUBSCRIBED] = 'Unsubscribed';
+$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_REJECTED] = 'Rejected';
+$GLOBALS['TL_LANG']['MSC'][BookingState::STATE_WAITING_LIST] = 'Waiting list';
 
 // Form validation
 $GLOBALS['TL_LANG']['MSC']['max_quantity_possible'] = 'Only a maximum of %d tickets allowed per registration.';
@@ -56,8 +57,8 @@ $GLOBALS['TL_LANG']['MSC']['participant_has_been_captured_successfully'] = 'The 
 $GLOBALS['TL_LANG']['MSC']['successfully_placed_on_the_waiting_list'] = 'Successfully placed one record on the waiting list.';
 $GLOBALS['TL_LANG']['MSC']['registration_failed_please_check_free_places'] = 'Registration failed. Check whether there are still enough places available for your request.';
 $GLOBALS['TL_LANG']['MSC']['registration_failed_please_check_free_places'] = 'Registration failed. Check whether there are still enough places available for your request.';
-$GLOBALS['TL_LANG']['MSC']['seats_available'] = 'seats available';
-$GLOBALS['TL_LANG']['MSC']['seats_available_waiting_list'] = 'seats available on waiting list';
+$GLOBALS['TL_LANG']['MSC']['seats_available'] = 'Seats available';
+$GLOBALS['TL_LANG']['MSC']['seats_available_waiting_list'] = 'Seats available on waiting list';
 
 // Post booking messages MSC.post_booking_confirm_cebb_booking_state_confirmed
 $GLOBALS['TL_LANG']['MSC']['post_booking_confirm_'.BookingState::STATE_NOT_CONFIRMED] = 'Booking process has been successfully completed. Your current booking status: <strong>Waiting for confirmation</strong>';

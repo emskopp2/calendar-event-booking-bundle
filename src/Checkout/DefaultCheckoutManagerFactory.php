@@ -35,7 +35,6 @@ final class DefaultCheckoutManagerFactory implements CheckoutManagerFactoryInter
         $serviceRegistry = new PrioritizedServiceRegistry(CheckoutStepInterface::class, 'checkout-manager-steps');
 
         foreach ($this->priorityMap as $identifier => $priority) {
-
             $step = $this->steps->get($identifier);
 
             if (!$step instanceof CheckoutStepInterface) {

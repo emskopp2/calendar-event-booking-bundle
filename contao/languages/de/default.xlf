@@ -3,51 +3,55 @@
   <file datatype="php" original="vendor/markocupic/calendar-event-booking-bundle/contao/languages/en/default.php" source-language="en" target-language="de">
     <body>
       <trans-unit id="MSC.costs">
-        <source>costs</source>
+        <source>Costs</source>
         <target>Teilnahmekosten</target>
       </trans-unit>
+      <trans-unit id="MSC.tickets">
+        <source>ticket(s)</source>
+        <target>Ticket(s)</target>
+      </trans-unit>
       <trans-unit id="MSC.bookings">
-        <source>bookings</source>
+        <source>Bookings</source>
         <target>Buchungen</target>
       </trans-unit>
       <trans-unit id="MSC.register">
-        <source>register</source>
-        <target>registrieren</target>
+        <source>Register</source>
+        <target>Registrieren</target>
       </trans-unit>
       <trans-unit id="MSC.your_registrations">
-        <source>your registrations</source>
+        <source>Your registrations</source>
         <target>Ihre Registrierungen</target>
       </trans-unit>
       <trans-unit id="MSC.finalize_registration">
-        <source>finalize registration</source>
+        <source>Finalize registration</source>
         <target>Registrierung abschliessen</target>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_undefined">
-        <source>undefined</source>
+        <source>Undefined</source>
         <target>Nicht definiert</target>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_not_confirmed">
-        <source>not confirmed</source>
+        <source>Not confirmed</source>
         <target>Buchungsanfrage noch nicht bestätigt</target>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_confirmed">
-        <source>confirmed</source>
+        <source>Confirmed</source>
         <target>Buchungsanfrage bestätigt</target>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_waiting_for_payment">
-        <source>waiting for payment</source>
+        <source>Waiting for payment</source>
         <target>Bezahlung ausstehend</target>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_unsubscribed">
-        <source>unsubscribed</source>
+        <source>Unsubscribed</source>
         <target>Buchung storniert</target>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_rejected">
-        <source>rejected</source>
+        <source>Rejected</source>
         <target>Buchungsanfrage abgelehnt</target>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_on_waiting_list">
-        <source>waiting list</source>
+        <source>Waiting list</source>
         <target>Auf Warteliste</target>
       </trans-unit>
       <trans-unit id="MSC.max_quantity_possible">
@@ -99,11 +103,11 @@
         <target>Registrierung fehlgeschlagen. Bitte kontrollieren sie die noch verfügbaren Plätze.</target>
       </trans-unit>
       <trans-unit id="MSC.seats_available">
-        <source>seats available</source>
+        <source>Seats available</source>
         <target>Verfügbare Plätze</target>
       </trans-unit>
       <trans-unit id="MSC.seats_available_waiting_list">
-        <source>seats available on waiting list</source>
+        <source>Seats available on waiting list</source>
         <target>Verfügbare Plätze Warteliste</target>
       </trans-unit>
       <trans-unit id="MSC.post_booking_confirm_cebb_booking_state_not_confirmed">

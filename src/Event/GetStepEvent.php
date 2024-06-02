@@ -21,16 +21,15 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class GetStepEvent extends Event
 {
-
     private Response|null $response = null;
 
     public function __construct(
         private readonly Request $request,
-        private readonly null|CheckoutStepInterface $step,
+        private readonly CheckoutStepInterface|null $step,
     ) {
     }
 
-    public function getStep(): null|CheckoutStepInterface
+    public function getStep(): CheckoutStepInterface|null
     {
         return $this->step;
     }

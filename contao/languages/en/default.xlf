@@ -3,13 +3,16 @@
   <file datatype="php" original="vendor/markocupic/calendar-event-booking-bundle/contao/languages/en/default.php" source-language="en">
     <body>
       <trans-unit id="MSC.costs">
-        <source>costs</source>
+        <source>Costs</source>
+      </trans-unit>
+      <trans-unit id="MSC.tickets">
+        <source>ticket(s)</source>
       </trans-unit>
       <trans-unit id="MSC.bookings">
-        <source>bookings</source>
+        <source>Bookings</source>
       </trans-unit>
       <trans-unit id="MSC.register">
-        <source>register</source>
+        <source>Register</source>
       </trans-unit>
       <trans-unit id="MSC.your_registrations">
         <source>Your registrations</source>
@@ -18,25 +21,25 @@
         <source>Finalize registration</source>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_undefined">
-        <source>undefined</source>
+        <source>Undefined</source>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_not_confirmed">
-        <source>not confirmed</source>
+        <source>Not confirmed</source>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_confirmed">
-        <source>confirmed</source>
+        <source>Confirmed</source>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_waiting_for_payment">
-        <source>waiting for payment</source>
+        <source>Waiting for payment</source>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_unsubscribed">
-        <source>unsubscribed</source>
+        <source>Unsubscribed</source>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_rejected">
-        <source>rejected</source>
+        <source>Rejected</source>
       </trans-unit>
       <trans-unit id="MSC.cebb_booking_state_on_waiting_list">
-        <source>waiting list</source>
+        <source>Waiting list</source>
       </trans-unit>
       <trans-unit id="MSC.max_quantity_possible">
         <source>Only a maximum of %d tickets allowed per registration.</source>
@@ -75,10 +78,10 @@
         <source>Registration failed. Check whether there are still enough places available for your request.</source>
       </trans-unit>
       <trans-unit id="MSC.seats_available">
-        <source>seats available</source>
+        <source>Seats available</source>
       </trans-unit>
       <trans-unit id="MSC.seats_available_waiting_list">
-        <source>seats available on waiting list</source>
+        <source>Seats available on waiting list</source>
       </trans-unit>
       <trans-unit id="MSC.post_booking_confirm_cebb_booking_state_not_confirmed">
         <source><![CDATA[Booking process has been successfully completed. Your current booking status: <strong>Waiting for confirmation</strong>]]></source>

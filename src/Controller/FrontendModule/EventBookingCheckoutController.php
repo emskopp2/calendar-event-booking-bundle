@@ -136,9 +136,9 @@ class EventBookingCheckoutController extends AbstractFrontendModuleController
 
         $step = $event->getStep();
 
-       if($event->isStopped() && $event->hasResponse()){
-           return $event->getResponse();
-       }
+        if ($event->isStopped() && $event->hasResponse()) {
+            return $event->getResponse();
+        }
 
         $dataForStep = [];
 
@@ -228,8 +228,6 @@ class EventBookingCheckoutController extends AbstractFrontendModuleController
         $this->eventDispatcher->dispatch($event);
 
         if ($event->isStopped()) {
-
-
             $this->addEventFlash($event->getMessageType(), $event->getMessage());
 
             if ($event->hasResponse()) {

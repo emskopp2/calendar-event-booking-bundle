@@ -40,20 +40,31 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class SubscriptionStep implements CheckoutStepInterface, ValidationCheckoutStepInterface, RedirectCheckoutStepInterface
 {
     public const CASE_BOOKING_NOT_YET_POSSIBLE = 'bookingNotYetPossible';
+
     public const CASE_BOOKING_NO_LONGER_POSSIBLE = 'bookingNoLongerPossible';
+
     public const CASE_BOOKING_POSSIBLE = 'bookingPossible';
+
     public const CASE_EVENT_FULLY_BOOKED = 'eventFullyBooked';
+
     public const CASE_EVENT_NOT_BOOKABLE = 'eventNotBookable';
+
     public const CASE_WAITING_LIST_POSSIBLE = 'waitingListPossible';
+
     private const STEP_IDENTIFIER = 'subscription';
 
     private string $templatePath = '';
 
     private Adapter $configAdapter;
+
     private Adapter $controllerAdapter;
+
     private Adapter $dateAdapter;
+
     private Adapter $messageAdapter;
+
     private Adapter $systemAdapter;
+
     private Adapter $formModelAdapter;
 
     public function __construct(
@@ -183,8 +194,7 @@ class SubscriptionStep implements CheckoutStepInterface, ValidationCheckoutStepI
             $template['form'] = $this->controllerAdapter->getForm($moduleModel->form);
         }
 
-        if($this->cartUtil->countRegistrations($request) >= $eventConfig->get('maxItemsPerCart'))
-        {
+        if ($this->cartUtil->countRegistrations($request) >= $eventConfig->get('maxItemsPerCart')) {
             $this->messageAdapter->addInfo('Es können keine weitere Registrierungen gemacht werden.');
         }
 

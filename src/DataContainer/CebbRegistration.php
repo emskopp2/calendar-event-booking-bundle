@@ -147,7 +147,9 @@ class CebbRegistration
                 $href = $this->urlParser->addQueryString('table=tl_cebb_payment', $href);
                 $href = $this->urlParser->addQueryString('popup=1', $href);
                 $href = $this->urlParser->addQueryString('id='.$paymentId, $href);
-                //$attributes .= sprintf(" onclick=\"Backend.openModalIframe({'title':'%s','url':this.href});return false\" class=\"show\"", $this->translator->trans('MSC.showOnly', [], 'contao_default'));
+                // $attributes .= sprintf("
+                // onclick=\"Backend.openModalIframe({'title':'%s','url':this.href});return false\"
+                // class=\"show\"", $this->translator->trans('MSC.showOnly', [], 'contao_default'));
             }
 
             return sprintf(
@@ -176,7 +178,9 @@ class CebbRegistration
             $href = Backend::addToUrl($href);
             $href = $this->urlParser->addQueryString('table=tl_cebb_order', $href);
             $href = $this->urlParser->addQueryString('id='.$orderId, $href);
-            //$attributes .= sprintf(" onclick=\"Backend.openModalIframe({'title':'%s','url':this.href});return false\" class=\"show\"", $this->translator->trans('MSC.showOnly', [], 'contao_default'));
+            // $attributes .= sprintf("
+            // onclick=\"Backend.openModalIframe({'title':'%s','url':this.href});return false\"
+            // class=\"show\"", $this->translator->trans('MSC.showOnly', [], 'contao_default'));
         }
 
         return sprintf(
@@ -204,7 +208,9 @@ class CebbRegistration
             $href = Backend::addToUrl($href);
             $href = $this->urlParser->addQueryString('table=tl_cebb_cart', $href);
             $href = $this->urlParser->addQueryString('id='.$cartId, $href);
-            //$attributes .= sprintf(" onclick=\"Backend.openModalIframe({'title':'%s','url':this.href});return false\" class=\"show\"", $this->translator->trans('MSC.showOnly', [], 'contao_default'));
+            // $attributes .= sprintf("
+            // onclick=\"Backend.openModalIframe({'title':'%s','url':this.href});return false\"
+            // class=\"show\"", $this->translator->trans('MSC.showOnly', [], 'contao_default'));
         }
 
         return sprintf(
