@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['cebb_checkoutType'] = [
     'exclude'   => true,
     'inputType' => 'select',
     'reference' => &$GLOBALS['TL_LANG']['MSC'],
-    'sql'       => "varchar(512) NOT NULL default 'default_checkout'",
+    'sql'       => "varchar(512) NOT NULL default 'default'",
 ];
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['cebb_jumpToOnCheckoutCompletion'] = [
