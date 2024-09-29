@@ -87,7 +87,8 @@ und nutzen Sie dabei die **Simple Tokens**.
 
 Mit ##event_unsubscribeHref## kann ein tokengesicherter Event-Abmeldelink mitgesandt werden. Dazu muss aber im Event die Event-Abmeldung erlaubt werden.
 Auch sollte das dafür nötige Frontend Modul "Event-Abmeldeformular" erstellt und in einer Seite eingebunden worden sein.
-![Notification Center](docs/notification_center.jpg)
+
+![Notification Center](docs/link_event_unsubscribeHref_v5.png)
 
 ##### Gebrauch der Simple Tokens im Notification Center
 
