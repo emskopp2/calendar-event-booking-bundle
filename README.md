@@ -56,6 +56,13 @@ markocupic_calendar_event_booking:
     convert_from: 'UTF-8'
     convert_to: 'ISO-8859-1'
 ```
+## Installation
+
+### Über Composer (SSH-Zugriff)
+Ausführen: "composer require markocupic/calendar-event-booking-bundle"
+
+### Über den Contao-Manager
+Suche nach: "markocupic/calendar-event-booking-bundle"
 
 ## Einrichtung: empfohlener Ablauf
 
