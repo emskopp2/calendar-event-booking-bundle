@@ -70,6 +70,8 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 
 ![Formulargenerator-Einstellung](docs/events-calendar.png)
 
+![Formulargenerator-Einstellung](docs/events-calendar-events.png)
+
 2. "Eventliste" und "Eventleser" Frontend-Module anlegen.
 3. Falls nicht schon geschehen, E-Mail-Gateway (Notification Center) anlegen.
 4. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Buchung" anlegen (Notification Center)
