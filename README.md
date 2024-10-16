@@ -57,7 +57,7 @@ markocupic_calendar_event_booking:
 ```
 ## Installation ##
 
-### Über Composer (SSH-Zugriff) ###
+### Über Composer ###
 
   - **Ausführen:** composer require markocupic/calendar-event-booking-bundle
 
