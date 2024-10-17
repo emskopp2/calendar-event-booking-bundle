@@ -128,6 +128,12 @@ und nutzen Sie dabei die **Simple Tokens**.
 Mit ##member_cancelRegistrationUrl## kann ein tokengesicherter Event-Abmeldelink mitgesandt werden. Dazu muss aber im Event die Event-Stornierung erlaubt werden.
 Auch sollte das dafür nötige Frontend Modul "Event-Abmeldeformular" erstellt und in einer Seite eingebunden worden sein.
 
+**Beispiel einer Stornierungsbenachrichtigung:**
+
+![Formulargenerator-Einstellung](docs/notification-center-stornierungsnachricht-1.png)
+![Formulargenerator-Einstellung](docs/notification-center-stornierungsnachricht-2.png)
+![Formulargenerator-Einstellung](docs/notification-center-stornierungsnachricht-3.png)
+
 ##### Gebrauch der Simple Tokens im Notification Center
 
 Teilnehmer:  ##member_gender## (Männlich, Weiblich oder Divers), ##member_salutation## (Übersetzt: Herr oder Frau), ##member_email##, ##member_firstname##, ##member_street##, etc. (Feldnamen aus tl_cebb_registration)
