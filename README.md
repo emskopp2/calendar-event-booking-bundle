@@ -64,19 +64,38 @@ Ausführen: "composer require markocupic/calendar-event-booking-bundle"
 ### Über den Contao-Manager
 Suche nach: "markocupic/calendar-event-booking-bundle"
 
-## Einrichtung: empfohlener Ablauf
-
-1. Kalender und Events anlegen.
+1. Kalender und Events anlegen:
 
 ![Formulargenerator-Einstellung](docs/events-calendar.png)
 
 ![Formulargenerator-Einstellung](docs/events-calendar-events.png)
 
-2. "Eventliste" und "Eventleser" Frontend-Module anlegen.
-3. Falls nicht schon geschehen, E-Mail-Gateway (Notification Center) anlegen.
+2. "Eventliste" und "Eventleser" Frontend-Module anlegen:
+
+![Formulargenerator-Einstellung](docs/frontend-modul-eventliste.png)
+
+![Formulargenerator-Einstellung](docs/frontend-modul-eventleser.png)
+
+3. Falls nicht schon geschehen, E-Mail-Gateway (Notification Center) anlegen:
+
+![Formulargenerator-Einstellung](docs/email-gateway.png)
+
 4. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Buchung" anlegen (Notification Center)
+
+![Formulargenerator-Einstellung](docs/benachrichtigung-event-buchung.png)
+
+![Formulargenerator-Einstellung](docs/nachrichti-bei-eventbuchung.png)
+
 5. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Stornierung" anlegen (Notification Center)
+
+![Formulargenerator-Einstellung](docs/benachrichtigung-event-stornierung.png)
+
+![Formulargenerator-Einstellung](docs/nachrichti-bei-event-stornierung.png)
+
 6. Im Contao Formulargenerator das automatisch generierte Formular anpassen und die benötigten Felder bereitstellen (evtl. DCA-Anpassung nötig).
+
+![Formulargenerator-Einstellung](docs/buchungsformular.png)
+
 7. Im Formular keine Weiterleitungsseite angeben. Diese muss im Frontend-Modul (nächster Schritt) gesetzt werden.
 8. Das Frontend Modul "Event-Buchungsformular" erstellen und in den Modul-Einstellungen das bei Punkt 6 erstellte Formular auswählen und die Weiterleitungsseite angeben.
 9. Die 3 erstellten Module (Eventliste, Eventleser und Event-Buchungsformular) in der Contao Seiten- und Artikelstruktur einbinden (Wichtig! Event-Buchungsformular und Eventleser gehören auf die gleiche Seite).
