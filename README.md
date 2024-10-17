@@ -74,33 +74,31 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 
 2. "Eventliste" und "Eventleser" Frontend-Module anlegen:
 
-![Formulargenerator-Einstellung](docs/frontend-modul-eventliste.png)
-
-![Formulargenerator-Einstellung](docs/frontend-modul-eventleser.png)
+![Formulargenerator-Einstellung](docs/frontend-module-leser-und-liste.png)
 
 3. Falls nicht schon geschehen, E-Mail-Gateway (Notification Center) anlegen:
 
 ![Formulargenerator-Einstellung](docs/email-gateway.png)
 
-4. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Buchung" anlegen (Notification Center)
+4. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Buchung" anlegen (Notification Center):
 
 ![Formulargenerator-Einstellung](docs/benachrichtigung-event-buchung.png)
 
 ![Formulargenerator-Einstellung](docs/nachricht-bei-eventbuchung.png)
 
-5. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Stornierung" anlegen (Notification Center)
+5. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Stornierung" anlegen (Notification Center):
 
 ![Formulargenerator-Einstellung](docs/benachrichtigung-event-stornierung.png)
 
 ![Formulargenerator-Einstellung](docs/nachricht-bei-event-stornierung.png)
 
-6. Im Contao Formulargenerator das automatisch generierte Formular anpassen und die benötigten Felder bereitstellen (evtl. DCA-Anpassung nötig).
+6. Im Contao Formulargenerator das automatisch generierte Formular anpassen und die benötigten Felder bereitstellen (evtl. DCA-Anpassung nötig):
 
 ![Formulargenerator-Einstellung](docs/buchungsformular.png)
 
 7. Im Formular keine Weiterleitungsseite angeben. Diese muss im Frontend-Modul (nächster Schritt) gesetzt werden.
 
-8. Das Frontend Modul "Event-Buchungsformular" erstellen und in den Modul-Einstellungen das bei Punkt 6 erstellte Formular auswählen und die Weiterleitungsseite angeben.
+8. Das Frontend Modul "Event-Buchungsformular" erstellen und in den Modul-Einstellungen das bei Punkt 6 erstellte Formular auswählen und die Weiterleitungsseite angeben:
 
 ![Formulargenerator-Einstellung](docs/frontend-modul-buchungsformular.png)
 
@@ -121,7 +119,6 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 ![Formulargenerator-Einstellung](docs/event-optionen-config-2.png)
 
 13. In der Kalendereinstellung die Seite mit dem "Event-Abmeldeformular" festlegen.
-
 
 #### Punkt 4: E-Mail Benachrichtigung im Notification Center konfigurieren
 
