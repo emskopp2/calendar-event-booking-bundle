@@ -84,13 +84,13 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 
 ![Formulargenerator-Einstellung](docs/benachrichtigung-event-buchung.png)
 
-![Formulargenerator-Einstellung](docs/nachrichti-bei-eventbuchung.png)
+![Formulargenerator-Einstellung](docs/nachricht-bei-eventbuchung.png)
 
 5. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Stornierung" anlegen (Notification Center)
 
 ![Formulargenerator-Einstellung](docs/benachrichtigung-event-stornierung.png)
 
-![Formulargenerator-Einstellung](docs/nachrichti-bei-event-stornierung.png)
+![Formulargenerator-Einstellung](docs/nachricht-bei-event-stornierung.png)
 
 6. Im Contao Formulargenerator das automatisch generierte Formular anpassen und die benötigten Felder bereitstellen (evtl. DCA-Anpassung nötig).
 
