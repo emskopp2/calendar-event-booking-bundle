@@ -58,11 +58,13 @@ markocupic_calendar_event_booking:
 ```
 ## Installation
 
-### Über Composer (SSH-Zugriff)
+### Über Composer
 Ausführen: "composer require markocupic/calendar-event-booking-bundle"
 
 ### Über den Contao-Manager
 Suche nach: "markocupic/calendar-event-booking-bundle"
+
+## Einrichtung: empfohlener Ablauf
 
 1. Kalender und Events anlegen:
 
@@ -97,12 +99,33 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 ![Formulargenerator-Einstellung](docs/buchungsformular.png)
 
 7. Im Formular keine Weiterleitungsseite angeben. Diese muss im Frontend-Modul (nächster Schritt) gesetzt werden.
+
 8. Das Frontend Modul "Event-Buchungsformular" erstellen und in den Modul-Einstellungen das bei Punkt 6 erstellte Formular auswählen und die Weiterleitungsseite angeben.
+
+
+
 9. Die 3 erstellten Module (Eventliste, Eventleser und Event-Buchungsformular) in der Contao Seiten- und Artikelstruktur einbinden (Wichtig! Event-Buchungsformular und Eventleser gehören auf die gleiche Seite).
+
+![Formulargenerator-Einstellung](docs/buchungsformular.png)
+
+![Formulargenerator-Einstellung](docs/frontend-modul-buchungsformular.png)
+
+![Formulargenerator-Einstellung](docs/frontend-modul-buchungsformular-config.png)
+
 10. Optional das Frontend Modul "Event-Stornierungsformular" erstellen und dieses in einer extra dafür erstellten Seite einbinden. Die Seite mit dem Stornierungsformular muss bei der Kalendereinstellung hinterlegt werden.
+
+
+
 11. Optional das Frontend Modul "Event-Mitglieder-Auflistung" erstellen und auf der Seite mit dem Eventleser Modul einbinden.
+
+
+
 12. Bei allen Events die Buchungs-, Benachrichtigungs- und Abmeldeoptionen konfigurieren.
+
+
+
 13. In der Kalendereinstellung die Seite mit dem "Event-Abmeldeformular" festlegen.
+
 
 #### Punkt 4: E-Mail Benachrichtigung im Notification Center konfigurieren
 
