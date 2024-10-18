@@ -80,13 +80,13 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 
 ![E-Mail-Gateway-anlegen](docs/email-gateway.png)
 
-4. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Buchung" anlegen (Notification Center):
+4. Gegebenenfalls Benachrichtigung des Typs "Nachricht bei Eventbuchung" anlegen (Notification Center):
 
 ![Benachrichtigung-bei-Eventbuchung-anlegen](docs/benachrichtigung-event-buchung.png)
 
 ![Benachrichtigung-bei-Eventbuchung-anlegen](docs/nachricht-bei-eventbuchung.png)
 
-5. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Stornierung" anlegen (Notification Center):
+5. Gegebenenfalls Benachrichtigung des Typs "Nachricht bei Event-Stornierung" anlegen (Notification Center):
 
 ![Benachrichtigung-bei-Eventstornierung-anlegen](docs/benachrichtigung-event-stornierung.png)
 
@@ -95,6 +95,8 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 6. Im Contao Formulargenerator das automatisch generierte Formular anpassen und die benötigten Felder bereitstellen (evtl. DCA-Anpassung nötig):
 
 ![Formulargenerator-Beispielformular-anpassen](docs/buchungsformular.png)
+
+![Formulargenerator-Beispielformular-anpassen](docs/formulargenerator-formular-anpassen.png)
 
 7. **Im Formular keine Weiterleitungsseite angeben. Diese muss im Frontend-Modul (nächster Schritt) gesetzt werden.**
 
@@ -108,7 +110,7 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 
 ![Formulargenerator-Weiterleitung-zur-Stornierungsseite](docs/formulargenerator-weiterleitung-zur-stornierungsseite.png)
 
-10. **Optional** das Frontend Modul "Event-Mitglieder-Auflistung" erstellen und auf der Seite mit dem Eventleser Modul einbinden.
+10. **Optional** das Frontend Modul "Event-Teilnehmer-Liste" erstellen und auf der Seite mit dem Eventleser Modul einbinden.
 
 ![Frontendmodul-Event-Teilnehmerliste](docs/frontend-modul-teilnehmerliste.png)
 
