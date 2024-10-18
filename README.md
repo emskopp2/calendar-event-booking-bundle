@@ -241,10 +241,9 @@ Array
 )
 
 ```
-
 #### Punkt 5: Event-Buchungsformular erstellen
 
-Beim ersten Aufruf der Seite nach der Installation der Erweiterung wird **automatisch** ein Beispielformular mit allen benötigten Feldern generiert.
+Beim ersten Aufruf der Seite nach der Installation der Erweiterung wird **automatisch** ein Beispielformular "event booking form sample (auto generated on database migration)" mit allen benötigten Feldern generiert.
 **Wichtig!!! Im Formular muss die Checkbox "Aktiviere Event-Buchungsformular-Funktion" aktiviert sein.** Weitere Einstellungen müssen keine zwingend gemacht werden.
 
 ![Formulargenerator-Einstellung](docs/buchungsformular-funktion-aktivieren.png)
