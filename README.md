@@ -106,7 +106,11 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 
 9. **Optional** das Frontend Modul "Event-Stornierungsformular" erstellen und dieses in einer extra dafür erstellten Seite einbinden. Die Seite mit dem Stornierungsformular muss bei der Kalendereinstellung hinterlegt werden.
 
+![Formulargenerator-Weiterleitung-zur-Stornierungsseite](docs/formulargenerator-weiterleitung-zur-stornierungsseite.png)
+
 10. **Optional** das Frontend Modul "Event-Mitglieder-Auflistung" erstellen und auf der Seite mit dem Eventleser Modul einbinden.
+
+![Frontendmodul-Event-Teilnehmerliste](docs/frontend-modul-teilnehmerliste.png)
 
 11. Die erstellten Module (Event-Buchungsformular, Eventleser und, falls vorhanden,die Eventliste) in der Contao Seiten- und Artikelstruktur einbinden 
 **(Wichtig! Event-Buchungsformular und Eventleser gehören auf die gleiche Seite).**
@@ -144,18 +148,11 @@ Auch sollte das dafür nötige Frontend Modul "Event-Abmeldeformular" erstellt u
 
 **Event:**
 
-* ##event_title##
-* ##event_street##
-* ##event_postal##
-* ##event_location##
-* ##event_unsubscribeLimitTstamp##
-* etc. (Feldnamen aus tl_calendar_events)
+* ##event_title##, ##event_street##, ##event_postal##, ##event_location##, ##event_unsubscribeLimitTstamp##, etc. (Feldnamen aus tl_calendar_events)
 
 **Email-Absender:** 
 
-* ##sender_name##
-* ##sender_email
-* etc. (Feldnamen aus tl_user)
+* ##sender_name##, ##sender_email, etc. (Feldnamen aus tl_user)
 
 #### Beispieltext Notification Center
 
@@ -261,16 +258,16 @@ Array
 Beim ersten Aufruf der Seite nach der Installation der Erweiterung wird **automatisch** ein Beispielformular "event booking form sample (auto generated on database migration)" mit allen benötigten Feldern generiert.
 **Wichtig!!! Im Formular muss die Checkbox "Aktiviere Event-Buchungsformular-Funktion" aktiviert sein.** Weitere Einstellungen müssen keine zwingend gemacht werden.
 
-![Formulargenerator-Einstellung](docs/buchungsformular-funktion-aktivieren.png)
+![Formulargenerator-Buchungsfunktion-aktiviren](docs/buchungsformular-funktion-aktivieren.png)
 
-Folgende Felder sind standardmässig im bereitgestellte Formular vorhanden und auch in der Datenbanktabelle `tl_cebb_registration` eingerichtet:
+**Folgende Felder sind standardmässig im bereitgestellte Formular vorhanden und auch in der Datenbanktabelle `tl_cebb_registration` eingerichtet:**
 `firstname`,`lastname`,`gender`,`dateOfBirth`,`street`,`postal`,`city`,`phone`,`email`,`quantity`<sup>1</sup>,`escorts`<sup>2</sup>,`notes`
 
-1 Benutzen Sie das Feld `quantity`, wenn Sie möchten, dass die im Feld eingetragene Ganzzahl zum Teilnehmertotal addiert wird.
+**1** Benutzen Sie das Feld `quantity`, wenn Sie möchten, dass die im Feld eingetragene Ganzzahl zum Teilnehmertotal addiert wird.
 Standardmässig (auch wenn das Feld im Formular weggelassen wird) ist dieser Wert 1.
 Das Feld macht in einem Szenario Sinn, wo es möglich sein sollte, dass eine Person mehrere Tickets buchen darf.
 
-2 Benutzen Sie das Feld `escorts`, wenn es sich um Begleitpersonen handelt, welche **nicht zum Teilnehmertotal addiert** werden sollen.
+**2** Benutzen Sie das Feld `escorts`, wenn es sich um Begleitpersonen handelt, welche **nicht zum Teilnehmertotal addiert** werden sollen.
 
 Werden weitere Felder gebraucht, so müssen diese unter `contao/dca/tl_cebb_registration.php` definiert werden.
 
