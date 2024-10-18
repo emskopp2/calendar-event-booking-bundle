@@ -246,7 +246,9 @@ Array
 
 Beim ersten Aufruf der Seite nach der Installation der Erweiterung wird **automatisch** ein Beispielformular mit allen benötigten Feldern generiert.
 **Wichtig!!! Im Formular muss die Checkbox "Aktiviere Event-Buchungsformular-Funktion" aktiviert sein.** Weitere Einstellungen müssen keine zwingend gemacht werden.
-![Formulargenerator-Einstellung](docs/form_generator.png)
+
+![Formulargenerator-Einstellung](docs/buchungsformular-funktion-aktivieren.png)
+
 Folgende Felder sind standardmässig im bereitgestellte Formular vorhanden und auch in der Datenbanktabelle `tl_cebb_registration` eingerichtet:
 `firstname`,`lastname`,`gender`,`dateOfBirth`,`street`,`postal`,`city`,`phone`,`email`,`quantity`<sup>1</sup>,`escorts`<sup>2</sup>,`notes`
 
