@@ -68,41 +68,41 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 
 1. Kalender und Events anlegen:
 
-![Formulargenerator-Einstellung](docs/events-calendar.png)
+![Contao-Eventkalender-anlegen](docs/events-calendar.png)
 
-![Formulargenerator-Einstellung](docs/events-calendar-events.png)
+![Contao-Events-anlegen](docs/events-calendar-events.png)
 
 2. "Eventliste" und "Eventleser" Frontend-Module anlegen:
 
-![Formulargenerator-Einstellung](docs/frontend-module-eventleser-eventliste.png)
+![Frontendmodule-Eventleser-und-Liste-anlegen](docs/frontend-module-eventleser-eventliste.png)
 
 3. Falls nicht schon geschehen, E-Mail-Gateway (Notification Center) anlegen:
 
-![Formulargenerator-Einstellung](docs/email-gateway.png)
+![E-Mail-Gateway-anlegen](docs/email-gateway.png)
 
 4. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Buchung" anlegen (Notification Center):
 
-![Formulargenerator-Einstellung](docs/benachrichtigung-event-buchung.png)
+![Benachrichtigung-bei-Eventbuchung-anlegen](docs/benachrichtigung-event-buchung.png)
 
-![Formulargenerator-Einstellung](docs/nachricht-bei-eventbuchung.png)
+![Benachrichtigung-bei-Eventbuchung-anlegen](docs/nachricht-bei-eventbuchung.png)
 
 5. Gegebenenfalls Benachrichtigung des Typs "Benachrichtigung bei Event Stornierung" anlegen (Notification Center):
 
-![Formulargenerator-Einstellung](docs/benachrichtigung-event-stornierung.png)
+![Benachrichtigung-bei-Eventstornierung-anlegen](docs/benachrichtigung-event-stornierung.png)
 
-![Formulargenerator-Einstellung](docs/nachricht-bei-event-stornierung.png)
+![Benachrichtigung-bei-Eventstornierung-anlegen](docs/nachricht-bei-event-stornierung.png)
 
 6. Im Contao Formulargenerator das automatisch generierte Formular anpassen und die benötigten Felder bereitstellen (evtl. DCA-Anpassung nötig):
 
-![Formulargenerator-Einstellung](docs/buchungsformular.png)
+![Formulargenerator-Beispielformular-anpassen](docs/buchungsformular.png)
 
-7. Im Formular keine Weiterleitungsseite angeben. Diese muss im Frontend-Modul (nächster Schritt) gesetzt werden.
+7. **Im Formular keine Weiterleitungsseite angeben. Diese muss im Frontend-Modul (nächster Schritt) gesetzt werden.**
 
 8. Das Frontend Modul "Event-Buchungsformular" erstellen und in den Modul-Einstellungen das bei Punkt 6 erstellte Formular auswählen und die Weiterleitungsseite angeben:
 
-![Formulargenerator-Einstellung](docs/frontend-modul-buchungsformular.png)
+![Frontendmodul-Event-Buchungsformular-anlegen](docs/frontend-modul-buchungsformular.png)
 
-![Formulargenerator-Einstellung](docs/frontend-modul-buchungsformular-config.png)
+![Frontendmodul-Event-Buchungsformular-konfigurieren](docs/frontend-modul-buchungsformular-config.png)
 
 9. **Optional** das Frontend Modul "Event-Stornierungsformular" erstellen und dieses in einer extra dafür erstellten Seite einbinden. Die Seite mit dem Stornierungsformular muss bei der Kalendereinstellung hinterlegt werden.
 
@@ -111,12 +111,12 @@ Suche nach: "markocupic/calendar-event-booking-bundle"
 11. Die erstellten Module (Event-Buchungsformular, Eventleser und, falls vorhanden,die Eventliste) in der Contao Seiten- und Artikelstruktur einbinden 
 **(Wichtig! Event-Buchungsformular und Eventleser gehören auf die gleiche Seite).**
 
-![Formulargenerator-Einstellung](docs/artikel-mit-frontendmodulen.png)
+![Artikel-mit-Frontendmodulen](docs/artikel-mit-frontendmodulen.png)
 
 12. Bei allen Events die Buchungs-, Benachrichtigungs- und Abmeldeoptionen konfigurieren.
 
-![Formulargenerator-Einstellung](docs/event-optionen-config-1.png)
-![Formulargenerator-Einstellung](docs/event-optionen-config-2.png)
+![Event-Optionen-konfigurieren](docs/event-optionen-config-1.png)
+![Event-Optionen-konfigurieren](docs/event-optionen-config-2.png)
 
 13. In der Kalendereinstellung die Seite mit dem "Event-Abmeldeformular" festlegen.
 
@@ -130,9 +130,9 @@ Auch sollte das dafür nötige Frontend Modul "Event-Abmeldeformular" erstellt u
 
 **Beispiel einer Stornierungsbenachrichtigung:**
 
-![Formulargenerator-Einstellung](docs/notification-center-stornierungsnachricht-1.png)
-![Formulargenerator-Einstellung](docs/notification-center-stornierungsnachricht-2.png)
-![Formulargenerator-Einstellung](docs/notification-center-stornierungsnachricht-3.png)
+![Stornierungsnachricht-Beispiel](docs/notification-center-stornierungsnachricht-1.png)
+![Stornierungsnachricht-Beispiel](docs/notification-center-stornierungsnachricht-2.png)
+![Stornierungsnachricht-Beispiel](docs/notification-center-stornierungsnachricht-3.png)
 
 ##### Gebrauch der Simple Tokens im Notification Center
 
@@ -388,7 +388,7 @@ Contao\CoreBundle\DataContainer\PaletteManipulator::create()
 #### Punkt 11: E-Mail Buchungsbestätigung im Event aktivieren
 
 Aktivieren Sie beim Event die Buchungsbestätigung mit dem Notification Center, wählen Sie eine Benachrichtigung aus und legen Sie einen Absender mit einer gültigen E-Mail-Adresse (tl_user) fest.
-![Benachrichtigung im Event aktivieren](docs/benachrichtigung-aktivieren.png)
+![Benachrichtigung im Event aktivieren](docs/benachrichtigung-event-aktivieren.png)
 
 ### Template Variablen
 
